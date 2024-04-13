@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <!-- 設置文件的基本元信息 -->
+    <meta charset="UTF-8"> <!-- 設置文件的字符編碼為 UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 設置頁面寬度為設備寬度，初始縮放比例為 1.0 -->
+    <title>使用者資訊</title> <!-- 設置頁面標題 -->
+    
+    <!-- 引入 CSS 樣式 -->
+    <style>
+        /* 表格區域樣式 */
+        .scrollable-table {
+            overflow-y: scroll; /* 設置表格區域內容過多時出現垂直滾動條 */
+            height: 425px; /* 設置表格區域高度 */
+        }
+        /* 表格表頭樣式 */
+        .scrollable-table table thead {
+            position: sticky; /* 將表格表頭固定在視窗頂部 */
+            top: 0;
+            background-color: #fff; /* 設置表頭背景顏色 */
+            z-index: 1; /* 設置表頭 z-index，使其顯示在其他內容之上 */
+        }
+        /* 表單元素樣式 */
+        .form-group {
+            display: flex; /* 使用彈性盒子模型 */
+            align-items: center; /* 垂直居中對齊 */
+            margin-bottom: 15px; /* 設置底部間距 */
+        }
+        .form-group label {
+            font-weight: bold; /* 設置標籤文本加粗 */
+        }
+        .form-group select,
+        .form-group input[type="text"] {
+            margin-right: 20px; /* 設置右側間距 */
+            width: 200px; /* 設置寬度 */
+            padding: 5px; /* 設置內邊距 */
+        }
+        .form-group button {
+            padding: 10px 20px; /* 設置內邊距 */
+            background-color: #007bff; /* 設置背景顏色 */
+            color: #fff; /* 設置文本顏色 */
+            border: none; /* 移除邊框 */
+            cursor: pointer; /* 設置滑鼠應答為手型 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 頁面標題 -->
+    <h1>使用者資訊</h1>
+    <!-- 搜尋表單 -->
+    <form action="/" method="GET"> <!-- 設置表單提交方法和目標 URL -->
+        <div class="form-group"> <!-- 表單元素容器 -->
+            <!-- 最低月繳金額輸入框 -->
+            <label for="price_min">最低月繳金額:</label>
+            <input type="text" id="price_min" name="price_min"><br><br>
+            <!-- 最高月繳金額輸入框 -->
+            <label for="price_max">最高月繳金額:</label>
+            <input type="text" id="price_max" name="price_max"><br><br>
+            <!-- 類型選擇框 -->
+            <label for="type">類型:</label>
+            <select id="type" name="type"> <!-- 選擇框 -->
+                <option value="type_any">不限</option> <!-- 選項 -->
+                <option value="type_true">租屋</option>
+                <option value="type_false">買屋</option>
+            </select><br><br>
+            <!-- 是否有車位選擇框 -->
+            <label for="has_parking">是否有車位:</label>
+            <select id="has_parking" name="has_parking"> <!-- 選擇框 -->
+                <option value="any">不限</option> <!-- 選項 -->
+                <option value="true">有</option>
+                <option value="false">無</option>
+            </select><br><br>
+            <!-- 提交按鈕 -->
+            <button type="submit">搜尋</button> <!-- 設置按鈕類型為提交 -->
+        </div>
+    </form>
+    <!-- 表格區域 -->
+    <div class="scrollable-table"> <!-- 表格區域容器 -->
+        <table border="1"> <!-- 表格 -->
+            <!-- 表頭 -->
+            <thead>
+                <tr>
+                    <th>編號</th> <!-- 表頭單元格 -->
+                    <th>價格</th>
+                    <th>名稱</th>
+                    <th>地址</th>
+                    <th>坪數</th>
+                    <th>屋齡</th>
+                    <th>樓層</th>
+                    <th>車位</th>
+                    <th>來源</th>
+                    <th>類型</th>
+                    <th>起始租金／首付款</th>
+                    <th>每月繳金額</th>
+                </tr>
+            </thead>
+            <!-- 資料行 -->
+            <tbody>
+                {% for row in data %} <!-- 遍歷資料列表 -->
+                <tr> <!-- 行 -->
+                    <td>{{ row.id }}</td> <!-- 單元格 -->
+                    <td>{{ row.price }}</td>
+                    <td>{{ row.name }}</td>
+                    <td><a href="https://www.google.com/maps/search/?api=1&query={{ row.address }}" target="_blank">{{ row.address }}</a></td>
+                    <td>{{ row.area }}</td>
+                    <td>{{ row.age }}</td>
+                    <td>{{ row.floor }}</td>
+                    <td>{{ row.parking }}</td>
+                    <td>{{ row.source }}</td>
+                    <td>{{ row.type }}</td>
+                    <td>{{ row.payment_start }}</td>
+                    <td>{{ row.monthly_payment }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
